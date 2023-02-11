@@ -7,7 +7,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
-def variables_view(request):
+def measurements_view(request):
     if request.method == 'GET':
         id = request.GET.get("id", None)
         if id:
@@ -25,7 +25,7 @@ def variables_view(request):
         return HttpResponse(variable, 'application/json')
 
 @csrf_exempt
-def variable_view(request, pk):
+def measurement_view(request, pk):
     if request.method == 'GET':
         variable_dto = ml.get_variable(pk)
         variable = serializers.serialize('json', [variable_dto,])
