@@ -11,27 +11,34 @@ def measurements_view(request):
     if request.method == 'GET':
         id = request.GET.get("id", None)
         if id:
-            variable_dto = ml.get_variable(id)
-            variable = serializers.serialize('json', [variable_dto,])
-            return HttpResponse(variable, 'application/json')
+            measurement_dto = ml.get_measurement(id)
+            measurement = serializers.serialize('json', [measurement_dto,])
+            return HttpResponse(measurement, 'application/json')
         else:
-            variables_dto = ml.get_variables()
-            variables = serializers.serialize('json', variables_dto)
-            return HttpResponse(variables, 'application/json')
+            measurements_dto = ml.get_measurements()
+            measurements = serializers.serialize('json', measurements_dto)
+            return HttpResponse(measurements, 'application/json')
 
     if request.method == 'POST':
-        variable_dto = ml.create_variable(json.loads(request.body))
-        variable = serializers.serialize('json', [variable_dto,])
-        return HttpResponse(variable, 'application/json')
+        measurement_dto = ml.create_measurement(json.loads(request.body))
+        measurement = serializers.serialize('json', [measurement_dto,])
+        return HttpResponse(measurement, 'application/json')
 
 @csrf_exempt
 def measurement_view(request, pk):
     if request.method == 'GET':
-        variable_dto = ml.get_variable(pk)
-        variable = serializers.serialize('json', [variable_dto,])
-        return HttpResponse(variable, 'application/json')
+        measurement_dto = ml.get_measurement(pk)
+        measurement = serializers.serialize('json', [measurement_dto,])
+        return HttpResponse(measurement, 'application/json')
 
     if request.method == 'PUT':
-        variable_dto = ml.update_variable(pk, json.loads(request.body))
-        variable = serializers.serialize('json', [variable_dto,])
-        return HttpResponse(variable, 'application/json')
+        measurement_dto = ml.update_measurement(pk, json.loads(request.body))
+        measurement = serializers.serialize('json', [measurement_dto,])
+        return HttpResponse(measurement, 'application/json')
+
+    if request.method == 'DELETE':
+        print("suiiiiiiiiiiii")
+        id = request.GET.get("id", None)
+        measurement_dto = ml.delete_measurement(pk)
+        #measurement = serializers.serialize('json', [measurement_dto,])
+        return HttpResponse(measurement_dto, "Deleted")
